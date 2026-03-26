@@ -15,7 +15,7 @@ const projects = [
     image: "/ecom.jpg",
     tags: ["HTML", "CSS", "JavaScript"],
     // github: "#",
-    demo: "https://varunnayu.github.io/clothing.in/index.html",
+    demo: "https://mens-hub.vercel.app/",
   },
   {
     title: "Games Hub",
@@ -105,55 +105,96 @@ export function ProjectsSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 onClick={() => setActiveCard(activeCard === index ? null : index)}
-                className="cursor-pointer"
+                className="cursor-pointer group"
               >
-                <Card
-                  className="group hover:border-primary/50 transition-all overflow-hidden h-full flex flex-col data-[active=true]:border-primary/50"
-                  data-active={activeCard === index}
-                >
-                  <div className="relative overflow-hidden aspect-video">
-                    <img
-                      src={project.image || "/placeholder.svg"}
-                      alt={project.title}
-                      className="object-cover w-full h-full group-hover:scale-110 group-data-[active=true]:scale-110 transition-transform duration-500"
-                    />
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-t from-background/90 to-transparent transition-opacity duration-300 flex items-end p-4 gap-2 ${
-                        activeCard === index ? "opacity-100" : "opacity-0 md:group-hover:opacity-100"
-                      }`}
-                    >
-                      {/* <Button size="sm" variant="secondary" asChild>
-                        <a href={project.github} target="_blank" rel="noopener noreferrer">
-                          <Github className="h-4 w-4 mr-2" />
-                          Code
-                        </a>
-                      </Button> */}
-                      <Button size="sm" asChild>
-                        <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4 mr-2" />
-                          Demo
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
+                {/* Glass effect outer container */}
+                <div className="relative h-full rounded-2xl overflow-hidden">
+                  {/* Liquid glassmorphism background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/5 backdrop-blur-xl" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
+                  
+                  {/* Animated liquid border effect */}
+                  <motion.div
+                    className="absolute inset-0 rounded-2xl pointer-events-none"
+                    animate={{
+                      boxShadow: activeCard === index 
+                        ? "0 0 40px rgba(99,102,241,0.4), inset 0 1px 0 rgba(255,255,255,0.1)" 
+                        : "0 0 20px rgba(99,102,241,0.2), inset 0 1px 0 rgba(255,255,255,0.05)"
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
 
-                  <CardHeader>
-                    <CardTitle className="group-hover:text-primary group-data-[active=true]:text-primary transition-colors">
-                      {project.title}
-                    </CardTitle>
-                    <CardDescription className="leading-relaxed">{project.description}</CardDescription>
-                  </CardHeader>
+                  <Card className="relative border border-white/10 bg-white/5 backdrop-blur-2xl overflow-hidden h-full flex flex-col hover:border-primary/40 transition-all shadow-xl hover:shadow-2xl hover:shadow-primary/20">
+                    {/* Image container with quality optimization */}
+                    <div className="relative overflow-hidden aspect-video bg-gradient-to-br from-primary/20 to-accent/10">
+                      <img
+                        src={project.image || "/placeholder.svg"}
+                        alt={project.title}
+                        className="object-cover w-full h-full group-hover:scale-110 group-data-[active=true]:scale-110 transition-transform duration-500 filter brightness-95 contrast-105 saturate-90"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      
+                      {/* Liquid overlay effect */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent" />
+                      <motion.div
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 group-data-[active=true]:opacity-100 transition-opacity duration-300"
+                        animate={{
+                          background: [
+                            "radial-gradient(circle at 30% 70%, rgba(99,102,241,0.1) 0%, transparent 50%)",
+                            "radial-gradient(circle at 70% 30%, rgba(139,92,246,0.1) 0%, transparent 50%)",
+                            "radial-gradient(circle at 30% 70%, rgba(99,102,241,0.1) 0%, transparent 50%)"
+                          ]
+                        }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                      />
 
-                  <CardContent className="mt-auto">
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
+                      {/* CTA buttons with glass effect */}
+                      <motion.div
+                        className="absolute inset-0 flex items-end p-4 gap-2"
+                        animate={{
+                          opacity: activeCard === index ? 1 : 0
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <Button 
+                          size="sm" 
+                          asChild
+                          className="backdrop-blur-md bg-primary/80 hover:bg-primary border border-white/20 text-white shadow-lg hover:shadow-xl"
+                        >
+                          <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="h-4 w-4 mr-2" />
+                            Live Demo
+                          </a>
+                        </Button>
+                      </motion.div>
                     </div>
-                  </CardContent>
-                </Card>
+
+                    {/* Content section with glass styling */}
+                    <CardHeader className="relative">
+                      <CardTitle className="group-hover:text-primary group-data-[active=true]:text-primary transition-colors">
+                        {project.title}
+                      </CardTitle>
+                      <CardDescription className="leading-relaxed text-slate-300">
+                        {project.description}
+                      </CardDescription>
+                    </CardHeader>
+
+                    {/* Tags with glass effect */}
+                    <CardContent className="mt-auto">
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <Badge 
+                            key={tag} 
+                            className="text-xs bg-white/10 hover:bg-primary/20 border border-white/20 backdrop-blur-md transition-all text-primary"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               </motion.div>
             ))}
           </div>

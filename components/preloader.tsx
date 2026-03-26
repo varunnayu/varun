@@ -7,8 +7,6 @@ import { Terminal, Code2, Zap, Cpu, Database, Layers } from "lucide-react"
 const loadingMessages = [
   "$ npm install dependencies...",
   "$ compiling TypeScript...",
-  "$ bundling with Turbopack...",
-  "$ optimizing production build...",
   "$ generating static pages...",
   "$ starting development server...",
   "✓ Ready "  

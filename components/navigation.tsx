@@ -5,12 +5,14 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { cn } from "@/lib/utils"
+import { useMotionValueEvent, useScroll } from "motion/react"
 
 const navItems = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
+  // { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  // { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ]
 
