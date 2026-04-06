@@ -23,7 +23,10 @@ export function Preloader() {
       setProgress((oldProgress) => {
         if (oldProgress === 100) {
           clearInterval(timer)
-          setTimeout(() => setIsLoading(false), 500)
+          setTimeout(() => {
+            document.documentElement.dataset.loaded = "true"
+            setIsLoading(false)
+          }, 500)
           return 100
         }
         const diff = Math.random() * 15

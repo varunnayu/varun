@@ -123,3 +123,42 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ─── Scroll Performance ──────────────────────────────────────────────────── */
+
+/* Smooth scroll only if the user hasn't requested reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Force GPU layer for the fixed nav so it never triggers a repaint during scroll */
+nav[class*="fixed"] {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/*
+ * content-visibility: auto — browser skips rendering off-screen sections
+ * entirely, then renders them just before they enter the viewport.
+ * This is the single biggest win for a tall single-page portfolio.
+ */
+main > section:not(#home) {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 800px; /* estimated height placeholder so scroll position is stable */
+}
+
+/*
+ * Limit reflow scope: changes inside a section don't bubble up to the
+ * document root and force full-page layout recalculations.
+ */
+ section {
+  contain: layout style;
+}
+
+/* Prevent blurry text on composited layers */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
